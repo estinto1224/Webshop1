@@ -315,44 +315,11 @@ export default function ShopPage4() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* GNB */}
-      <nav className="bg-[#ffffff] shadow text-black flex items-center justify-between px-4 py-2 rounded mb-6">
-        <div className="flex items-center gap-4">
-          <a href="http://m.pmang.com/">
-            <img
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGIAAAAXCAYAAADwSpp8AAACjUlEQVRoge2ZPWgUQRSAv0QPNRqNKTTGJhxaiRZCKgstRCJqY+VPZUoLsdTCJqAgCApBxIAQLEQEwcJCRDvxD0RRFAvFwxBUxHj+oBiikSfvYHjO3c7t7d5tjv3gYN/Mmzfv7duZnX3XMV0szpIs74B7wDHghWN5KVBqcCbx9TVwHrjgtJfUfihvgHFg1NEvA8sCx88AH4CbwFG9Fk4Bw3ECmx9nUASrgN3AJmAt8E3VO4DlCdjvBQaBCb0RQk8dNxH1Y6PewCsxfJD7tho4APQDQ9reFTfGzjiDAlkJbE3R/q4EbOxMwMY2YEGjRiSzRzzth4E+R74G3I+wNQ84qE9Khf4a+q+APY68BrjsyHfUjwoS8AlH7nWuB3TFRTGs24fPhmUL8N3Tvhi4BRRUlnkXAr88uiPAmQC//iXipKd9v0mEbAHnAuytA/Y5cncN3Z/AI0eeNv1fTP+iGrbKAb4JLwP1hCfqg48fgVuhxPg5ZLI03hGtoCdwRSzJagDtkohSnS/rVtCtq8xLuyRiLiAHo2I1P9s1EWX95rAUsro9tWsiBqq8aHcA11vgj/DVOaX993Gbb03NY9Y5Qf2xsyb9QWfLDDMtDn7OELoi5CPoeIROp+fkUu0cnjaHnPqPy/om+7EZmPK099mG0ER06a9enjcURjgfzUMw0qR5LRNGHnLqULWYTLPWdBW4m6J9l6AyQhO4WGUlRnE6dEU8AN5G6PzWk8EnrRPdMP1Swhhz5EnTP2X6n5n+96b/oXN9FngMbAdWBMTjm2PclFFsyYUAXYlpA7BXK8+FKuMrSMy3pXYl/0f4FJ6a/VRqT5cijOY0QJpbU04d5InICHkiMkKeiIyQJyIj5InIAsBfn6Joht8J2PgAAAAASUVORK5CYII="
-              alt="홈"
-              className="h-5"
-            />
-          </a>
-          <div className="flex items-center gap-2">
-            <Link to="/" className="text-sm text-blue-500 hover:text-blue-700">
-              웹상점
-            </Link>
-            <Link to="/shop2" className="text-sm text-blue-500 hover:text-blue-700">
-              뉴맞고
-            </Link>
-            <Link to="/shop3" className="text-sm text-blue-500 hover:text-blue-700">
-              섯다
-            </Link>
-            <Link to="/shop3" className="text-sm text-blue-500 hover:text-blue-700">
-              포커
-            </Link>
-            <Link to="/shop3" className="text-sm text-blue-500 hover:text-blue-700">
-              쇼다운홀덤
-            </Link>
-          </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <button className="text-sm px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
-            로그인
-          </button>
-          <button
-            className="p-2"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            {menuOpen ? <HiX size={24} /> : <HiMenu size={24} />}
-          </button>
-        </div>
+      <nav className="gnb">
+        <ul>
+          <li><Link to="/">홈</Link></li>
+          <li><Link to="/admin">관리자</Link></li>
+        </ul>
       </nav>
 
       {menuOpen && (
