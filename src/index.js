@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import ShopPage2 from './webshop2';
 import ShopPage3 from './webshop3';
@@ -10,7 +10,7 @@ import AdminPage from './admin/AdminPage';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename="/Webshop1">
+    <HashRouter>
       <Routes>
         <Route path="/" element={<ShopPage4 />} />
         <Route path="/shop2" element={<ShopPage2 />} />
@@ -18,6 +18,6 @@ root.render(
         <Route path="/shop4" element={<ShopPage4 />} />
         <Route path="/admin/*" element={<AdminPage />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>
 ); 
