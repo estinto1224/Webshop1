@@ -6,6 +6,12 @@ const AddShop = () => {
   const [shopDescription, setShopDescription] = useState('');
   const [shopImage, setShopImage] = useState('');
   const [shopCategory, setShopCategory] = useState('');
+  const [backgroundImage, setBackgroundImage] = useState(null);
+  const [backgroundImagePreview, setBackgroundImagePreview] = useState('');
+  const [gameBiImage, setGameBiImage] = useState(null);
+  const [gameBiImagePreview, setGameBiImagePreview] = useState('');
+  const [shortcutButtonColor, setShortcutButtonColor] = useState('#000000');
+  const [shortcutButtonText, setShortcutButtonText] = useState('');
   const [shopList, setShopList] = useState([
     { name: '피망 웹상점(홈)', description: '피망 웹상점 설명', category: '카테고리', isActive: true },
     { name: '뉴맞고 웹상점', description: '뉴맞고 웹상점 설명', category: '카테고리', isActive: true },
@@ -14,6 +20,31 @@ const AddShop = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
   const [editIndex, setEditIndex] = useState(null); // 수정할 상점의 인덱스 상태 추가
   const navigate = useNavigate(); // useNavigate 사용
+
+  // 파일 업로드 핸들러
+  const handleBackgroundImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setBackgroundImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBackgroundImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleGameBiImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setGameBiImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setGameBiImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleAddShop = (e) => {
     e.preventDefault();
@@ -24,6 +55,12 @@ const AddShop = () => {
       category1: document.getElementById('category1').value, // 카테고리1
       category4: document.getElementById('category4').value, // 카테고리4
       siteType: document.getElementById('siteType').value, // 사이트 유형
+      backgroundImage: backgroundImage,
+      backgroundImagePreview: backgroundImagePreview,
+      gameBiImage: gameBiImage,
+      gameBiImagePreview: gameBiImagePreview,
+      shortcutButtonColor: shortcutButtonColor,
+      shortcutButtonText: shortcutButtonText,
     };
     console.log('새 상점 추가:', newShop);
     
@@ -38,6 +75,12 @@ const AddShop = () => {
     setShopDescription('');
     setShopImage('');
     setShopCategory('');
+    setBackgroundImage(null);
+    setBackgroundImagePreview('');
+    setGameBiImage(null);
+    setGameBiImagePreview('');
+    setShortcutButtonColor('#000000');
+    setShortcutButtonText('');
     setIsModalOpen(false); // 모달 닫기
   };
 
@@ -54,6 +97,12 @@ const AddShop = () => {
     setShopName(shopToEdit.name);
     setShopDescription(shopToEdit.description);
     setShopCategory(shopToEdit.category);
+    setBackgroundImage(shopToEdit.backgroundImage || null);
+    setBackgroundImagePreview(shopToEdit.backgroundImagePreview || '');
+    setGameBiImage(shopToEdit.gameBiImage || null);
+    setGameBiImagePreview(shopToEdit.gameBiImagePreview || '');
+    setShortcutButtonColor(shopToEdit.shortcutButtonColor || '#000000');
+    setShortcutButtonText(shopToEdit.shortcutButtonText || '');
     setEditIndex(index); // 수정할 상점의 인덱스 저장
     setIsModalOpen(true); // 모달 열기
   };
@@ -119,7 +168,7 @@ const AddShop = () => {
       {/* 모달 */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-6 w-1/3">
+          <div className="bg-white rounded-lg p-6 w-1/2 max-h-[90vh] overflow-y-auto">
             <h2 className="text-2xl font-bold mb-4">{editIndex !== null ? '상점 수정' : '상점 추가'}</h2>
             <form onSubmit={(e) => {
               e.preventDefault();
@@ -132,6 +181,12 @@ const AddShop = () => {
                   category1: document.getElementById('category1').value,
                   category4: document.getElementById('category4').value,
                   siteType: document.getElementById('siteType').value,
+                  backgroundImage: backgroundImage,
+                  backgroundImagePreview: backgroundImagePreview,
+                  gameBiImage: gameBiImage,
+                  gameBiImagePreview: gameBiImagePreview,
+                  shortcutButtonColor: shortcutButtonColor,
+                  shortcutButtonText: shortcutButtonText,
                 };
                 const updatedShopList = shopList.map((s, i) => (i === editIndex ? updatedShop : s));
                 setShopList(updatedShopList);
@@ -144,6 +199,12 @@ const AddShop = () => {
                   category1: document.getElementById('category1').value,
                   category4: document.getElementById('category4').value,
                   siteType: document.getElementById('siteType').value,
+                  backgroundImage: backgroundImage,
+                  backgroundImagePreview: backgroundImagePreview,
+                  gameBiImage: gameBiImage,
+                  gameBiImagePreview: gameBiImagePreview,
+                  shortcutButtonColor: shortcutButtonColor,
+                  shortcutButtonText: shortcutButtonText,
                 };
                 setShopList([...shopList, newShop]);
               }
@@ -151,6 +212,12 @@ const AddShop = () => {
               setShopName('');
               setShopDescription('');
               setShopCategory('');
+              setBackgroundImage(null);
+              setBackgroundImagePreview('');
+              setGameBiImage(null);
+              setGameBiImagePreview('');
+              setShortcutButtonColor('#000000');
+              setShortcutButtonText('');
               setIsModalOpen(false);
               setEditIndex(null); // 수정 인덱스 초기화
             }}>
@@ -164,18 +231,79 @@ const AddShop = () => {
                   required
                 />
               </div>
-              {/* 
+              
+              {/* 백그라운드 이미지 등록 */}
               <div className="mt-4">
-                <label className="block text-sm font-medium text-gray-700">상점 설명</label>
-                <textarea
-                  value={shopDescription}
-                  onChange={(e) => setShopDescription(e.target.value)}
+                <label className="block text-sm font-medium text-gray-700">백그라운드 이미지 등록</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleBackgroundImageChange}
                   className="border rounded px-3 py-2 w-full"
-                  rows="4"
-                  required
                 />
+                {backgroundImagePreview && (
+                  <div className="mt-2">
+                    <img 
+                      src={backgroundImagePreview} 
+                      alt="백그라운드 미리보기" 
+                      className="w-32 h-20 object-cover border rounded"
+                    />
+                    <p className="text-sm text-gray-500 mt-1">
+                      파일명: {backgroundImage?.name}
+                    </p>
+                  </div>
+                )}
               </div>
-              */}
+
+              {/* 게임BI 이미지 등록 */}
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700">게임BI 이미지 등록</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleGameBiImageChange}
+                  className="border rounded px-3 py-2 w-full"
+                />
+                {gameBiImagePreview && (
+                  <div className="mt-2">
+                    <img 
+                      src={gameBiImagePreview} 
+                      alt="게임BI 미리보기" 
+                      className="w-32 h-20 object-cover border rounded"
+                    />
+                    <p className="text-sm text-gray-500 mt-1">
+                      파일명: {gameBiImage?.name}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* 바로가기 버튼 배경 색상 입력 */}
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700">바로가기 버튼 배경 색상</label>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="color"
+                    value={shortcutButtonColor}
+                    onChange={(e) => setShortcutButtonColor(e.target.value)}
+                    className="w-12 h-10 border rounded cursor-pointer"
+                  />
+                  <input
+                    type="text"
+                    value={shortcutButtonColor}
+                    onChange={(e) => setShortcutButtonColor(e.target.value)}
+                    placeholder="#000000"
+                    className="border rounded px-3 py-2 flex-1"
+                  />
+                </div>
+                <div className="mt-2">
+                  <div 
+                    className="w-full h-8 rounded border"
+                    style={{ backgroundColor: shortcutButtonColor }}
+                  ></div>
+                </div>
+              </div>
+
               {/* 카테고리 셀렉트 박스 추가 */}
               <div className="mt-4">
                 <label className="block text-sm font-medium text-gray-700">상점 카테고리 </label>
@@ -188,32 +316,7 @@ const AddShop = () => {
                   <option value="카테고리1-5">피망쇼다운홀덤</option>
                 </select>
               </div>
-              {/*              
-               <div className="mt-4">
-                <label className="block text-sm font-medium text-gray-700">NBOS 노출 카테고리 2</label>
-                <select className="border rounded px-3 py-2 w-full">
-                  <option value="">선택하세요</option>
-                  <option value="카테고리2-1">피망포커_PC</option>
-                  <option value="카테고리2-1">피망포커_웹샵</option>
-                </select>
-              </div>
-              <div className="mt-4">
-                <label className="block text-sm font-medium text-gray-700">NBOS 노출 카테고리 3</label>
-                <select className="border rounded px-3 py-2 w-full">
-                  <option value="">선택하세요</option>
-                  <option value="카테고리3-1">피망포커_PC</option>
-                  <option value="카테고리3-2">피망포커_웹샵</option>
-                </select>
-              </div>
-              <div className="mt-4">
-                <label className="block text-sm font-medium text-gray-700">NBOS 노출 카테고리 4</label>
-                <select id="category4" className="border rounded px-3 py-2 w-full">
-                  <option value="">선택하세요</option>
-                  <option value="카테고리4-1">피망포커_PC</option>
-                  <option value="카테고리4-2">피망포커_웹샵</option>
-                </select>
-              </div>
-              */}
+              
               {/* 사이트 유형 셀렉트 박스 추가 */}
               <div className="mt-4">
                 <label className="block text-sm font-medium text-gray-700">사이트 유형</label>
@@ -223,19 +326,43 @@ const AddShop = () => {
                 </select>
               </div>
 
-              <button
-                type="submit"
-                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
-              >
-                추가
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsModalOpen(false)}
-                className="mt-4 ml-2 bg-gray-300 text-black px-4 py-2 rounded"
-              >
-                취소
-              </button>
+              {/* 바로가기 버튼 텍스트 문구 입력 */}
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700">바로가기 버튼 텍스트 문구</label>
+                <input
+                  type="text"
+                  value={shortcutButtonText}
+                  onChange={(e) => setShortcutButtonText(e.target.value)}
+                  placeholder="예: 게임 시작하기"
+                  className="border rounded px-3 py-2 w-full"
+                />
+                {shortcutButtonText && (
+                  <div className="mt-2">
+                    <div 
+                      className="inline-block px-4 py-2 rounded text-white text-center"
+                      style={{ backgroundColor: shortcutButtonColor }}
+                    >
+                      {shortcutButtonText}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex space-x-2 mt-6">
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                  {editIndex !== null ? '수정' : '추가'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400"
+                >
+                  취소
+                </button>
+              </div>
             </form>
           </div>
         </div>
