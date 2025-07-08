@@ -349,19 +349,19 @@ const AddShop = () => {
               </div>
 
               <div className="flex space-x-2 mt-6">
-                <button
-                  type="submit"
+              <button
+                type="submit"
                   className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                >
+              >
                   {editIndex !== null ? '수정' : '추가'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(false)}
                   className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400"
-                >
-                  취소
-                </button>
+              >
+                취소
+              </button>
               </div>
             </form>
           </div>

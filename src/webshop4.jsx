@@ -260,8 +260,8 @@ export default function ShopPage4() {
 
   const shopLinks = [
     { name: "뉴맞고", path: "/shop2", bg: "https://img.pmang.com/renewal/gameicon/2016/ico_gostop.png" },
-    { name: "포커", path: "/shop3", bg: "https://img.pmang.com/renewal/gameicon/2016/ico_poker.png" },
     { name: "섯다", path: "/shop4", bg: "https://img.pmang.com/renewal/gameicon/2016/ico_sutda.png" },
+    { name: "포커", path: "/shop3", bg: "https://img.pmang.com/renewal/gameicon/2016/ico_poker.png" },
     { name: "쇼다운홀덤", path: "/shop5", bg: "https://img.pmang.com/renewal/gameicon/2016/ico_showdown.png" }
   ];
 
@@ -328,16 +328,16 @@ export default function ShopPage4() {
             <Link to="/" className="text-sm text-blue-500 hover:text-blue-700">
               웹상점
             </Link>
-            <Link to="/shop2" className="hidden md:block text-sm text-blue-500 hover:text-blue-700">
+            <Link to="/shop2" className="block md:hidden text-sm text-blue-500 hover:text-blue-700">
               뉴맞고
             </Link>
-            <Link to="/shop3" className="hidden md:block text-sm text-blue-500 hover:text-blue-700">
+            <Link to="/shop3" className="block md:hidden text-sm text-blue-500 hover:text-blue-700">
               섯다
             </Link>
-            <Link to="/shop3" className="hidden md:block text-sm text-blue-500 hover:text-blue-700">
+            <Link to="/shop3" className="block md:hidden text-sm text-blue-500 hover:text-blue-700">
               포커
             </Link>
-            <Link to="/shop3" className="hidden md:block text-sm text-blue-500 hover:text-blue-700">
+            <Link to="/shop3" className="block md:hidden text-sm text-blue-500 hover:text-blue-700">
               쇼다운홀덤
             </Link>
           </div>
@@ -375,29 +375,49 @@ export default function ShopPage4() {
       <header>
       </header>
 
-      
-      {/* 메인 컨텐츠 */}
-      <main className="max-w-7xl mx-auto px-4 py-6">
-
-        {/* 상점 바로가기 영역 */}
-        <div className="mb-10">
-          <h2 className="text-xl font-bold mb-6 text-gray-900">게임별 상점 바로가기</h2>
-          <div className="grid grid-cols-2 gap-4">
+      {/* 상점 바로가기 영역 */}
+      <div className="w-full px-4 py-6">
+        <div className="max-w-7xl mx-auto mb-6">
+          <h2 className="text-xl font-bold text-gray-900">게임별 상점 바로가기</h2>
+        </div>
+        <div className="w-full">
+          <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 w-full">
             {shopLinks.map((shop) => (
               <Link
                 key={shop.name}
                 to={shop.path}
-                className="flex flex-col items-center justify-end p-0 h-32 rounded-lg shadow hover:shadow-md transition-shadow relative overflow-hidden group"
+                className="flex flex-col items-center justify-center p-0 h-32 md:h-auto lg:h-auto rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group w-full aspect-[640/820]"
                 style={{ background: `url(${shop.bg}) center/cover no-repeat` }}
               >
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all"></div>
-                <span className="relative z-10 text-lg font-semibold text-white drop-shadow mt-auto mb-4">
-                  {shop.name}
-                </span>
+                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300"></div>
+                <div className="relative z-10 flex flex-col items-center justify-center text-center">
+                  <span className="text-lg md:text-base lg:text-sm font-bold text-white drop-shadow-lg mb-4">
+                    {shop.name}
+                  </span>
+                  {/* 태블릿 이상에서는 중앙 정렬 위/아래, 태블릿 이하에서는 좌/우 끝 배치 */}
+                  <div className="flex flex-row md:flex-col items-center md:items-center justify-between md:justify-center w-full px-4 md:px-0">
+                    {/* 게임별 BI 이미지 영역 */}
+                    <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                      <div className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-white/20 rounded-xl flex items-center justify-center">
+                        <span className="text-white/80 text-xs md:text-sm lg:text-base font-medium">
+                          BI 이미지
+                        </span>
+                      </div>
+                    </div>
+                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-2xl shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105">
+                      웹상점 바로가기
+                    </button>
+                  </div>
+                </div>
               </Link>
             ))}
           </div>
         </div>
+      </div>
+
+      
+      {/* 메인 컨텐츠 */}
+      <main className="max-w-7xl mx-auto px-4 py-6">
 
 
 
