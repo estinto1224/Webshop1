@@ -10,6 +10,9 @@ const AddShop = () => {
   const [backgroundImagePreview, setBackgroundImagePreview] = useState('');
   const [gameBiImage, setGameBiImage] = useState(null);
   const [gameBiImagePreview, setGameBiImagePreview] = useState('');
+  const [mobileBannerImage, setMobileBannerImage] = useState(null);
+  const [mobileBannerImagePreview, setMobileBannerImagePreview] = useState('');
+  const [videoUrl, setVideoUrl] = useState('');
   const [shortcutButtonColor, setShortcutButtonColor] = useState('#000000');
   const [shortcutButtonText, setShortcutButtonText] = useState('');
   const [shopList, setShopList] = useState([
@@ -46,6 +49,18 @@ const AddShop = () => {
     }
   };
 
+  const handleMobileBannerImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setMobileBannerImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setMobileBannerImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleAddShop = (e) => {
     e.preventDefault();
     const newShop = {
@@ -59,6 +74,9 @@ const AddShop = () => {
       backgroundImagePreview: backgroundImagePreview,
       gameBiImage: gameBiImage,
       gameBiImagePreview: gameBiImagePreview,
+      mobileBannerImage: mobileBannerImage,
+      mobileBannerImagePreview: mobileBannerImagePreview,
+      videoUrl: videoUrl,
       shortcutButtonColor: shortcutButtonColor,
       shortcutButtonText: shortcutButtonText,
     };
@@ -79,6 +97,9 @@ const AddShop = () => {
     setBackgroundImagePreview('');
     setGameBiImage(null);
     setGameBiImagePreview('');
+    setMobileBannerImage(null);
+    setMobileBannerImagePreview('');
+    setVideoUrl('');
     setShortcutButtonColor('#000000');
     setShortcutButtonText('');
     setIsModalOpen(false); // 모달 닫기
@@ -101,6 +122,9 @@ const AddShop = () => {
     setBackgroundImagePreview(shopToEdit.backgroundImagePreview || '');
     setGameBiImage(shopToEdit.gameBiImage || null);
     setGameBiImagePreview(shopToEdit.gameBiImagePreview || '');
+    setMobileBannerImage(shopToEdit.mobileBannerImage || null);
+    setMobileBannerImagePreview(shopToEdit.mobileBannerImagePreview || '');
+    setVideoUrl(shopToEdit.videoUrl || '');
     setShortcutButtonColor(shopToEdit.shortcutButtonColor || '#000000');
     setShortcutButtonText(shopToEdit.shortcutButtonText || '');
     setEditIndex(index); // 수정할 상점의 인덱스 저장
@@ -180,11 +204,14 @@ const AddShop = () => {
                   category: shopCategory,
                   category1: document.getElementById('category1').value,
                   category4: document.getElementById('category4').value,
-                  siteType: document.getElementById('siteType').value,
+                  exposureOrder: document.getElementById('exposureOrder').value,
                   backgroundImage: backgroundImage,
                   backgroundImagePreview: backgroundImagePreview,
                   gameBiImage: gameBiImage,
                   gameBiImagePreview: gameBiImagePreview,
+                  mobileBannerImage: mobileBannerImage,
+                  mobileBannerImagePreview: mobileBannerImagePreview,
+                  videoUrl: videoUrl,
                   shortcutButtonColor: shortcutButtonColor,
                   shortcutButtonText: shortcutButtonText,
                 };
@@ -198,11 +225,14 @@ const AddShop = () => {
                   category: shopCategory,
                   category1: document.getElementById('category1').value,
                   category4: document.getElementById('category4').value,
-                  siteType: document.getElementById('siteType').value,
+                  exposureOrder: document.getElementById('exposureOrder').value,
                   backgroundImage: backgroundImage,
                   backgroundImagePreview: backgroundImagePreview,
                   gameBiImage: gameBiImage,
                   gameBiImagePreview: gameBiImagePreview,
+                  mobileBannerImage: mobileBannerImage,
+                  mobileBannerImagePreview: mobileBannerImagePreview,
+                  videoUrl: videoUrl,
                   shortcutButtonColor: shortcutButtonColor,
                   shortcutButtonText: shortcutButtonText,
                 };
@@ -216,6 +246,9 @@ const AddShop = () => {
               setBackgroundImagePreview('');
               setGameBiImage(null);
               setGameBiImagePreview('');
+              setMobileBannerImage(null);
+              setMobileBannerImagePreview('');
+              setVideoUrl('');
               setShortcutButtonColor('#000000');
               setShortcutButtonText('');
               setIsModalOpen(false);
@@ -278,6 +311,48 @@ const AddShop = () => {
                 )}
               </div>
 
+              {/* 모바일용 배너 이미지 등록 */}
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700">모바일용 배너 이미지 등록</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleMobileBannerImageChange}
+                  className="border rounded px-3 py-2 w-full"
+                />
+                {mobileBannerImagePreview && (
+                  <div className="mt-2">
+                    <img 
+                      src={mobileBannerImagePreview} 
+                      alt="모바일 배너 미리보기" 
+                      className="w-32 h-20 object-cover border rounded"
+                    />
+                    <p className="text-sm text-gray-500 mt-1">
+                      파일명: {mobileBannerImage?.name}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* 영상 URL 입력 (선택사항) */}
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  영상 URL <span className="text-gray-500 text-xs">(선택사항)</span>
+                </label>
+                <input
+                  type="url"
+                  value={videoUrl}
+                  onChange={(e) => setVideoUrl(e.target.value)}
+                  placeholder="https://example.com/video.mp4"
+                  className="border rounded px-3 py-2 w-full"
+                />
+                {videoUrl && (
+                  <p className="text-sm text-gray-500 mt-1">
+                    입력된 URL: {videoUrl}
+                  </p>
+                )}
+              </div>
+
               {/* 바로가기 버튼 배경 색상 입력 */}
               <div className="mt-4">
                 <label className="block text-sm font-medium text-gray-700">바로가기 버튼 배경 색상</label>
@@ -317,12 +392,18 @@ const AddShop = () => {
                 </select>
               </div>
               
-              {/* 사이트 유형 셀렉트 박스 추가 */}
+              {/* 상점 노출 순위 셀렉트 박스 추가 */}
               <div className="mt-4">
-                <label className="block text-sm font-medium text-gray-700">사이트 유형</label>
-                <select id="siteType" className="border rounded px-3 py-2 w-full">
+                <label className="block text-sm font-medium text-gray-700">
+                  상점 노출 순위 <span className="text-gray-500 text-xs">(선택한 상점 다음에 위치)</span>
+                </label>
+                <select id="exposureOrder" className="border rounded px-3 py-2 w-full">
                   <option value="">선택하세요</option>
-                  <option value="유형1">GP (고포류게임)</option>
+                  <option value="최상위">최상위</option>
+                  <option value="뉴맞고 웹상점">뉴맞고 웹상점</option>
+                  <option value="포커 웹상점">포커 웹상점</option>
+                  <option value="섯다 웹상점">섯다 웹상점</option>
+                  <option value="쇼다운홀덤 웹상점">쇼다운홀덤 웹상점</option>
                 </select>
               </div>
 
