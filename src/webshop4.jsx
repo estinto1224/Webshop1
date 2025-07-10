@@ -418,17 +418,13 @@ export default function ShopPage4() {
       
       {/* 메인 컨텐츠 */}
       <main className="max-w-7xl mx-auto px-4 py-6">
-
-
-
-
-
-        {categories.map((category) => (
-          <div key={category} id={category} className="mb-10">
-            <a href={`#${category}`} className="text-xl font-bold mb-2 text-gray-900 hover:underline block">
-              {category}
-            </a>
-            <div className="relative">
+        <div className="w-full max-w-6xl mx-auto">
+          {categories.map((category) => (
+            <div key={category} id={category} className="mb-10">
+              <a href={`#${category}`} className="text-xl font-bold mb-2 text-gray-900 hover:underline block">
+                {category}
+              </a>
+              <div className="relative">
               <style>
                 {`
                   .slick-list {
@@ -490,6 +486,7 @@ export default function ShopPage4() {
             </div>
           </div>
         ))}
+        </div>
 
 
       </main>
